@@ -1,68 +1,147 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+# CodeTest - Color Matcher
 
-In the project directory, you can run:
+Build a static website that finds similar colours for an inputted color.
 
-### `yarn start`
+## Tasks
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+-[ ] React.js & ES6
+-[ ] Color Table
+-[ ] Search Field
+-[ ] Validation
+-[ ] Warning message
+-[ ] Conversion between different color formats
+-[ ] Styling
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Resources
 
-### `yarn test`
+### [#HEX Color Validation](https://stackoverflow.com/questions/8027423/how-to-check-if-a-string-is-a-valid-hex-color-representation/8027444)
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```regexp
+/^#[0-9A-F]{6}$/i.test('#AABBCC')
 
-### `yarn build`
+/^#([0-9A-F]{3}){1,2}$/i.test('#ABC')
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+```javascript
+function isValidColor(str) {
+    return str.match(/^#[a-f0-9]{6}$/i) !== null;
+}
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `yarn eject`
+### [When using a word as color name](https://stackoverflow.com/questions/48484767/javascript-check-if-string-is-valid-css-color)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```javascript
+function isValidColor(strColor) {
+  var s = new Option().style;
+  s.color = strColor;
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+  // return 'false' if color wasn't assigned
+  return s.color == strColor.toLowerCase();
+}
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## [Hex to RGB](https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```javascript
+function hex2rgb(hex){
+	return{r:'0x'+hex[1]+hex[2]|0,g:'0x'+hex[3]+hex[4]|0,b:'0x'+hex[5]+hex[6]|0}
+}
+```
 
-## Learn More
+### [HEX to CMYK](http://www.javascripter.net/faq/hex2cmyk.htm)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```javascript
+function hexToCMYK (hex) {
+ var computedC = 0;
+ var computedM = 0;
+ var computedY = 0;
+ var computedK = 0;
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+ hex = (hex.charAt(0)=="#") ? hex.substring(1,7) : hex;
 
-### Code Splitting
+ if (hex.length != 6) {
+  alert ('Invalid length of the input hex value!');   
+  return; 
+ }
+ if (/[0-9a-f]{6}/i.test(hex) != true) {
+  alert ('Invalid digits in the input hex value!');
+  return; 
+ }
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+ var r = parseInt(hex.substring(0,2),16); 
+ var g = parseInt(hex.substring(2,4),16); 
+ var b = parseInt(hex.substring(4,6),16); 
 
-### Analyzing the Bundle Size
+ // BLACK
+ if (r==0 && g==0 && b==0) {
+  computedK = 1;
+  return [0,0,0,1];
+ }
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+ computedC = 1 - (r/255);
+ computedM = 1 - (g/255);
+ computedY = 1 - (b/255);
 
-### Making a Progressive Web App
+ var minCMY = Math.min(computedC,Math.min(computedM,computedY));
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+ computedC = (computedC - minCMY) / (1 - minCMY) ;
+ computedM = (computedM - minCMY) / (1 - minCMY) ;
+ computedY = (computedY - minCMY) / (1 - minCMY) ;
+ computedK = minCMY;
 
-### Advanced Configuration
+ return [computedC,computedM,computedY,computedK];
+}
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+### [Color Difference](https://www.compuphase.com/cmetric.htm)
 
-### Deployment
+```c
+typedef struct {
+   unsigned char r, g, b;
+} RGB;
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+double ColourDistance(RGB e1, RGB e2)
+{
+  long rmean = ( (long)e1.r + (long)e2.r ) / 2;
+  long r = (long)e1.r - (long)e2.r;
+  long g = (long)e1.g - (long)e2.g;
+  long b = (long)e1.b - (long)e2.b;
+  return sqrt((((512+rmean)*r*r)>>8) + 4*g*g + (((767-rmean)*b*b)>>8));
+}
+```
 
-### `yarn build` fails to minify
+### [HTML Table](https://www.w3schools.com/html/html_tables.asp)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+```html
+<table style="width:100%">
+  <tr>
+    <th>Firstname</th>
+    <th>Lastname</th> 
+    <th>Age</th>
+  </tr>
+  <tr>
+    <td>Jill</td>
+    <td>Smith</td> 
+    <td>50</td>
+  </tr>
+  <tr>
+    <td>Eve</td>
+    <td>Jackson</td> 
+    <td>94</td>
+  </tr>
+</table>
+```
+
+
+### [Array Sort](https://www.w3schools.com/js/js_array_sort.asp)
+
+```javascript
+var points = [40, 100, 1, 5, 25, 10];
+points.sort(function(a, b){return b - a});
+
+// [100,40,25,10,5,1]
+```
