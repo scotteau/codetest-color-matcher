@@ -15,6 +15,14 @@
   color: #141618;
   font-weight: 500;
 }
+.App h1 {
+  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica, helvetica neue, ubuntu, roboto, noto, segoe ui, arial, sans-serif;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #141618;
+  font-weight: 500;
+  font-size: 1.5rem;
+}
 .App form {
   width: 100%;
   display: flex;
@@ -38,6 +46,48 @@
 }
 .App form .colorInput--invalid {
   border-color: crimson;
+}
+.App .pagination {
+  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica, helvetica neue, ubuntu, roboto, noto, segoe ui, arial, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: #141618;
+  width: 100%;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+.App .pagination .page, .App .pagination .previous, .App .pagination .next {
+  margin: 0 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.App .pagination .page:focus, .App .pagination .previous:focus, .App .pagination .next:focus {
+  outline: none;
+}
+.App .pagination .page__link, .App .pagination .previous__link, .App .pagination .next__link {
+  border-radius: 0.2rem;
+  width: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2rem;
+}
+.App .pagination .page__link:hover, .App .pagination .previous__link:hover, .App .pagination .next__link:hover {
+  cursor: pointer;
+  background: lightgray;
+}
+.App .pagination .page__link:focus, .App .pagination .previous__link:focus, .App .pagination .next__link:focus {
+  outline: none;
+}
+.App .pagination .page--active, .App .pagination .previous--active, .App .pagination .next--active {
+  background: #e3f2fd;
+}
+.App .pagination .page--active:hover, .App .pagination .previous--active:hover, .App .pagination .next--active:hover {
+  background: #e3f2fd;
 }
 .App table {
   font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica, helvetica neue, ubuntu, roboto, noto, segoe ui, arial, sans-serif;

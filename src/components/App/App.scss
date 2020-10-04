@@ -15,6 +15,12 @@
     font-weight: 500;
   }
 
+  h1 {
+    @include header;
+    font-weight: 500;
+    font-size: 1.5rem;
+  }
+
   form {
     width: 100%;
     display: flex;
@@ -41,6 +47,59 @@
 
     }
   }
+
+  .pagination {
+    @include desc;
+    width: 100%;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+
+
+    .page, .previous, .next {
+      margin: 0 0.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:focus {
+        outline: none;
+      }
+
+
+      &__link {
+        border-radius: 0.2rem;
+        width: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 2rem;
+
+        &:hover {
+          cursor: pointer;
+          background: lightgray;
+        }
+
+
+        &:focus {
+          outline: none;
+        }
+
+      }
+
+      &--active {
+        background: #e3f2fd;
+
+        &:hover {
+          background: #e3f2fd;
+        }
+      }
+
+    }
+  }
+
 
   table {
     font-family: $font-family;

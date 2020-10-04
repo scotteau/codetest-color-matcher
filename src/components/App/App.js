@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import * as rawData from "../../model/colors.json";
 import {getColorDistance, hexToCMYK, hexToRGB} from "../../Utilities/utilities";
+import ReactPaginate from "react-paginate";
 
 function App() {
 
@@ -16,6 +17,11 @@ function App() {
     const colorInput = React.useRef(null);
 
     let [touched, setTouched] = React.useState(false);
+
+    const [first, setFirst] = React.useState(0);
+
+    const maxItem = 50;
+    const pageSize = 20;
 
     function handleChange(event) {
         const hex = event.target.value;
@@ -64,15 +70,27 @@ function App() {
                 rgb: hexToRGB(hex),
                 cmyk: hexToCMYK(hex),
                 distance: getColorDistance(inputtedColor, hex)
-            })).sort((a, b) => a.distance - b.distance).slice(0, 50);
+            })).sort((a, b) => a.distance - b.distance)
+                .slice(0, maxItem)
+                .map((item, index) => ({
+                    ...item,
+                    index: index
+                }));
 
-            setData(composedData);
+            const result = composedData.slice(first, first + pageSize);
+            setData(result);
         }
-    }, [inputtedColor])
+    }, [inputtedColor, first])
 
 
     function assignClasses() {
         return `colorInput ${touched && !isValid && "colorInput--invalid"} ${touched && isValid && "colorInput--valid"}`;
+    }
+
+    function handlePageClick(e) {
+        const selectedPage = e.selected;
+        const first = Math.ceil(selectedPage * pageSize);
+        setFirst(first);
     }
 
     return (
@@ -94,6 +112,24 @@ function App() {
             </form>
 
             {data.length > 0 && <>
+                <ReactPaginate
+                    pageCount={Math.ceil(maxItem / pageSize)}
+                    previousLabel={'<'}
+                    nextLabel={'>'}
+                    previousClassName={'previous'}
+                    nextClassName={'next'}
+                    previousLinkClassName={'previous__link'}
+                    nextLinkClassName={'next__link'}
+                    pageRangeDisplayed={pageSize}
+                    marginPagesDisplayed={2}
+                    onPageChange={(e) => handlePageClick(e)}
+                    containerClassName={'pagination'}
+                    pageClassName={'page'}
+                    pageLinkClassName={'page__link'}
+                    breakClassName={'break-me'}
+                    initialPage={0}
+                    activeClassName={'page--active'}
+                />
                 <table>
                     <thead>
                     <tr>
@@ -108,7 +144,7 @@ function App() {
 
                     <tbody>
                     {
-                        data.map(({name, hex, rgb, cmyk}, index) => (
+                        data.map(({name, hex, rgb, cmyk, index}) => (
                             <tr key={hex}>
                                 <td className={"index"}>{index + 1}</td>
                                 <td>
