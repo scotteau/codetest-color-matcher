@@ -107,9 +107,25 @@ function App() {
         }
     }, [inputtedColor])
 
+    function handleChange(event) {
+    //    if valid
+    //    set it as inputted color
+    //    else
+        console.log(event.target.value);
+
+    }
+
+    function handleSubmit(event) {
+        event.preventDefault();
+    }
+
     return (
         <div className="App">
             <div className="target" style={{background: inputtedColor ? inputtedColor : "transparent"}}/>
+
+            <form onSubmit={(event) => handleSubmit(event)}>
+                <input type="text" onChange={(event) => handleChange(event)}/>
+            </form>
             <table>
                 <thead>
 
