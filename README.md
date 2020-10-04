@@ -6,13 +6,13 @@ Build a static website that finds similar colours for an inputted color.
 
 ## Tasks
 
--[x] React.js & ES6
--[x] Color Table
--[x] Search Field
--[x] Validation - 6 digit hex
--[x] Warning message
--[x] Conversion between different color formats
--[x] Styling
+- [x] React.js & ES6
+- [x] Color Table
+- [x] Search Field
+- [x] Validation - 6 digit hex
+- [x] Warning message
+- [x] Conversion between different color formats
+- [x] Styling
 
 ## Resources
 
