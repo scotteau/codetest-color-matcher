@@ -122,6 +122,9 @@
 .App table .dot {
   visibility: hidden;
 }
+.App table .name {
+  min-width: 11rem;
+}
 .App table .index {
   color: #63768d;
 }

@@ -101,7 +101,6 @@ function App() {
         <div className="App">
             <div className="target"
                  style={{background: inputtedColor ? inputtedColor : "transparent"}}>
-                <span>{inputtedColor}</span>
             </div>
 
             <h1>Find the 50 Most Matched Colors</h1>

@@ -132,6 +132,10 @@
       visibility: hidden;
     }
 
+    .name {
+      min-width: 11rem;
+    }
+
     .index {
       color: $color-gray;
     }
