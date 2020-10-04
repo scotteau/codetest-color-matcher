@@ -40,10 +40,10 @@ export const hexToCMYK = (hex) => {
     computedK = minCMY;
 
     return {
-        c: parseInt(Math.ceil(computedC * 100)),
-        m: parseInt(Math.ceil(computedM * 100)),
-        y: parseInt(Math.ceil(computedY * 100)),
-        k: parseInt(Math.ceil(computedK * 100))
+        c: parseInt(Math.round(computedC * 100)),
+        m: parseInt(Math.round(computedM * 100)),
+        y: parseInt(Math.round(computedY * 100)),
+        k: parseInt(Math.round(computedK * 100))
     };
 }
 

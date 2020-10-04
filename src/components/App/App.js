@@ -51,8 +51,14 @@ function App() {
         event.preventDefault();
         if (isValid) {
             const result = colorInput.current.value;
-            setInputtedColor(result);
-            reset();
+            if (result !== inputtedColor) {
+                setInputtedColor(result);
+                reset();
+            } else {
+                colorInput.current.value = "";
+                setTouched(false);
+                setIsValid(false);
+            }
         } else {
             setTouched(true);
             setIsValid(false);
@@ -87,12 +93,10 @@ function App() {
     };
 
     const selectColor = hex => {
-        if (hex !== inputtedColor) {
-            colorInput.current.value = hex;
-            colorInput.current.focus();
-            setTouched(true);
-            setIsValid(checkIsValid(hex));
-        }
+        colorInput.current.value = hex;
+        colorInput.current.focus();
+        setTouched(true);
+        setIsValid(checkIsValid(hex));
     };
 
     return (
