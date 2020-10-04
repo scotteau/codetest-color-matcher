@@ -60,6 +60,7 @@ function App() {
         setIsValid(false);
         setTouched(false);
         colorInput.current.blur();
+        setData([]);
     }
 
     React.useEffect(() => {
@@ -112,6 +113,7 @@ function App() {
                        placeholder={"#Hex"}
                        className={assignClasses()}
                        onBlur={() => handleBlur()}
+                       spellCheck={"false"}
                 />
                 <p className={`error ${touched && !isValid && "error--show"}`}>The hex format is not correct</p>
             </form>
