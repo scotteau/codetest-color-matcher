@@ -65,7 +65,7 @@
 .App form div .colorInput--invalid {
   border-color: crimson;
 }
-.App form div button {
+.App form div .button {
   margin-left: 0.5rem;
   padding: 0.25rem 0.75rem;
   border-radius: 0.5rem;
@@ -77,12 +77,15 @@
   color: #63768d;
   border: 1px solid #63768d;
   background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.App form div button:hover {
+.App form div .button:hover {
   cursor: pointer;
   background: rgba(99, 118, 141, 0.05);
 }
-.App form div button:focus {
+.App form div .button:focus {
   outline: none;
 }
 .App form .error {
@@ -171,6 +174,10 @@
   font-weight: 400;
   color: #141618;
   padding: 0.25rem 0.75rem;
+}
+.App table td:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 /*# sourceMappingURL=App.css.map */

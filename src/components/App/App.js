@@ -105,6 +105,13 @@ function App() {
         setInputtedColor(randomColor);
     }
 
+    function selectColor(hex) {
+        if (hex !== inputtedColor) {
+            setInputtedColor(hex);
+            reset();
+        }
+    }
+
     return (
         <div className="App">
             <div className="target"
@@ -125,9 +132,9 @@ function App() {
                            onBlur={() => handleBlur()}
                            spellCheck={"false"}
                     />
-                    <button
+                    <span className={"button"}
                         onClick={(event) => randomColor(event)}
-                    >Random Color</button>
+                    >Random Color</span>
                 </div>
                 <p className={`error ${touched && !isValid && "error--show"}`}>The hex format is not correct</p>
             </form>
@@ -166,7 +173,7 @@ function App() {
                     <tbody>
                     {
                         data.map(({name, hex, rgb, cmyk, index}) => (
-                            <tr key={hex}>
+                            <tr key={hex} onClick={() => selectColor(hex)}>
                                 <td className={"index"}>{index + 1}</td>
                                 <td>
                                     <div className="display" style={{background: hex}}/>

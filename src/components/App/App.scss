@@ -62,7 +62,7 @@
 
       }
 
-      button {
+      .button {
         margin-left: 0.5rem;
         padding: 0.25rem 0.75rem;
         border-radius: 0.5rem;
@@ -71,6 +71,9 @@
         color: $color-gray;
         border: 1px solid $color-gray;
         background: transparent;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
         &:hover {
           cursor: pointer;
@@ -182,6 +185,11 @@
     td {
       @include desc;
       padding: 0.25rem 0.75rem;
+
+      &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+      }
 
     }
 
