@@ -24,18 +24,27 @@
   margin: 0 auto;
   height: 2rem;
   outline: none;
+  padding: 0 0.5rem;
+  letter-spacing: 0.15rem;
+  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica, helvetica neue, ubuntu, roboto, noto, segoe ui, arial, sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  color: #141618;
 }
 .App table {
   font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica, helvetica neue, ubuntu, roboto, noto, segoe ui, arial, sans-serif;
   margin-top: 1rem;
 }
 .App table .display {
-  width: 1rem;
-  height: 1rem;
+  width: 1.25rem;
+  height: 1.25rem;
   border-radius: 1rem;
 }
 .App table .dot {
   visibility: hidden;
+}
+.App table .index {
+  color: #63768d;
 }
 .App table th {
   text-align: left;
