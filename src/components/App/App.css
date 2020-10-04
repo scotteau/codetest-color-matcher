@@ -30,6 +30,11 @@
   font-size: 1rem;
   font-weight: 400;
   color: #141618;
+  border: 2px solid lightgray;
+  border-radius: 0.25rem;
+}
+.App form .colorInput--valid {
+  border-color: limegreen;
 }
 .App table {
   font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica, helvetica neue, ubuntu, roboto, noto, segoe ui, arial, sans-serif;

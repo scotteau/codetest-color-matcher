@@ -15,9 +15,20 @@ function App() {
 
     const colorInput = React.useRef(null);
 
+    let [touched, setTouched] = React.useState(false);
 
     function handleChange(event) {
         const hex = event.target.value;
+
+        if (hex.length > 0) {
+            setTouched(true);
+        }
+
+        // if (hex[0] !== "#") {
+        //     colorInput.current.value = `#${hex}`;
+        // }
+
+
         const validator = /^#[a-f0-9]{6}$/i;
         if (validator.test(hex)) {
             setIsValid(true);
@@ -31,11 +42,18 @@ function App() {
         if (isValid) {
             const result = colorInput.current.value;
             setInputtedColor(result);
-            colorInput.current.value = "";
+            reset();
         } else {
             colorInput.current.value = "";
             console.log("throw an error");
         }
+    }
+
+    const reset = () => {
+        colorInput.current.value = "";
+        setIsValid(false);
+        setTouched(false);
+        colorInput.current.blur();
     }
 
     const renderTableContent = () => {
@@ -83,8 +101,7 @@ function App() {
                        onChange={(event) => handleChange(event)}
                        ref={colorInput}
                        placeholder={"#Hex"}
-                       className={`colorInput`}
-
+                       className={`colorInput ${(touched && isValid) && "colorInput--valid"}`}
                 />
             </form>
 
