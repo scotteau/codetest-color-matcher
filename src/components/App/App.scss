@@ -1,5 +1,7 @@
 @import "../../styles/shared";
 
+@include reset;
+
 .App {
   display: flex;
   flex-direction: column;
@@ -19,15 +21,18 @@
     @include header;
     font-weight: 500;
     font-size: 1.5rem;
+    padding: 1rem 0;
   }
 
   form {
-    width: 100%;
+    width: 40%;
+    margin: 0 auto;
     display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 
     .colorInput {
-      width: 30%;
-      margin: 0 auto;
+      width: 100%;
       height: 2rem;
       outline: none;
       padding: 0 0.5rem;
@@ -45,6 +50,17 @@
         border-color: crimson;
       }
 
+    }
+
+    .error {
+      @include desc;
+      margin: 0.25rem 0.25rem;
+      visibility: hidden;
+      color: crimson;
+
+      &--show {
+        visibility: visible;
+      }
     }
   }
 
@@ -103,7 +119,7 @@
 
   table {
     font-family: $font-family;
-    margin-top: 1rem;
+    margin-top: 1.5rem;
 
 
     .display {

@@ -1,3 +1,9 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
 .App {
   display: flex;
   flex-direction: column;
@@ -22,14 +28,17 @@
   color: #141618;
   font-weight: 500;
   font-size: 1.5rem;
+  padding: 1rem 0;
 }
 .App form {
-  width: 100%;
+  width: 40%;
+  margin: 0 auto;
   display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 .App form .colorInput {
-  width: 30%;
-  margin: 0 auto;
+  width: 100%;
   height: 2rem;
   outline: none;
   padding: 0 0.5rem;
@@ -46,6 +55,18 @@
 }
 .App form .colorInput--invalid {
   border-color: crimson;
+}
+.App form .error {
+  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica, helvetica neue, ubuntu, roboto, noto, segoe ui, arial, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: #141618;
+  margin: 0.25rem 0.25rem;
+  visibility: hidden;
+  color: crimson;
+}
+.App form .error--show {
+  visibility: visible;
 }
 .App .pagination {
   font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica, helvetica neue, ubuntu, roboto, noto, segoe ui, arial, sans-serif;
@@ -91,7 +112,7 @@
 }
 .App table {
   font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica, helvetica neue, ubuntu, roboto, noto, segoe ui, arial, sans-serif;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
 }
 .App table .display {
   width: 1.25rem;

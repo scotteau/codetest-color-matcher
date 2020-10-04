@@ -50,8 +50,8 @@ function App() {
             setInputtedColor(result);
             reset();
         } else {
-            colorInput.current.value = "";
-            console.log("throw an error");
+            setTouched(true);
+            setIsValid(false);
         }
     }
 
@@ -93,6 +93,10 @@ function App() {
         setFirst(first);
     }
 
+    function handleBlur() {
+        setTouched(false);
+    }
+
     return (
         <div className="App">
             <div className="target"
@@ -108,7 +112,9 @@ function App() {
                        ref={colorInput}
                        placeholder={"#Hex"}
                        className={assignClasses()}
+                       onBlur={() => handleBlur()}
                 />
+                <p className={`error ${touched && !isValid && "error--show"}`}>The hex format is not correct</p>
             </form>
 
             {data.length > 0 && <>
