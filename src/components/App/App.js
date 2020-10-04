@@ -6,7 +6,6 @@ function App() {
 
     const hexToRGB = (hex) => {
         const rgb = {r: '0x' + hex[1] + hex[2] | 0, g: '0x' + hex[3] + hex[4] | 0, b: '0x' + hex[5] + hex[6] | 0}
-        console.log(rgb);
         return `${rgb.r}, ${rgb.g}, ${rgb.b}`;
     }
 
@@ -54,11 +53,25 @@ function App() {
             y: parseInt(Math.round(computedY * 100)),
             k: parseInt(Math.round(computedK * 100))
         };
-        console.log(cmyk);
 
         return `${cmyk.c}, ${cmyk.m}, ${cmyk.y}, ${cmyk.k}`;
     }
 
+    const renderTableContent = () => {
+        const result = data.colors.slice(0, 10);
+        return result.map(({color, hex}) => (
+            <tr key={hex}>
+                <td>
+                    <div className="display" style={{background: hex}}/>
+                </td>
+                <td>{color}</td>
+                <td>{hex}</td>
+                <td>{hexToRGB(hex)}</td>
+                <td>{hexToCMYK(hex)}</td>
+            </tr>
+        ))
+
+    }
 
     return (
         <div className="App">
@@ -75,18 +88,7 @@ function App() {
                 </thead>
 
                 <tbody>
-
-
-                <tr>
-                    <td>
-                        <div className="display" style={{background: data.colors[0].hex}}/>
-                    </td>
-                    <td>{data.colors[0].color}</td>
-                    <td>{data.colors[0].hex}</td>
-                    <td>{hexToRGB(data.colors[0].hex)}</td>
-                    <td>{hexToCMYK(data.colors[0].hex)}</td>
-                </tr>
-
+                {renderTableContent()}
                 </tbody>
 
             </table>
