@@ -6,42 +6,29 @@ import ReactPaginate from "react-paginate";
 
 function App() {
 
-    const [inputtedColor, setInputtedColor] = React.useState();
-
-    const [data, setData] = React.useState([]);
-
-    const [isValid, setIsValid] = React.useState(false);
-
     const colorInput = React.useRef(null);
 
-    let [touched, setTouched] = React.useState(false);
-
+    const [inputtedColor, setInputtedColor] = React.useState();
+    const [data, setData] = React.useState([]);
+    const [isValid, setIsValid] = React.useState(false);
+    const [touched, setTouched] = React.useState(false);
     const [first, setFirst] = React.useState(0);
 
     const maxItem = 50;
     const pageSize = 20;
 
-    function handleChange(event) {
-        const hex = event.target.value;
-
-        if (hex.length > 0) {
-            setTouched(true);
-        }
-
-        // if (hex[0] !== "#") {
-        //     colorInput.current.value = `#${hex}`;
-        // }
-
-
+    const checkIsValid = (hex) => {
         const validator = /^#[a-f0-9]{6}$/i;
-        if (validator.test(hex)) {
-            setIsValid(true);
-        } else {
-            setIsValid(false);
-        }
+        return validator.test(hex);
     }
 
-    function handleSubmit(event) {
+    const handleChange = (event) => {
+        const hex = event.target.value;
+        hex.length > 0 && setTouched(true)
+        setIsValid(checkIsValid(hex));
+    }
+
+    const handleSubmit = event => {
         event.preventDefault();
         if (isValid) {
             const result = colorInput.current.value;
@@ -51,7 +38,7 @@ function App() {
             setTouched(true);
             setIsValid(false);
         }
-    }
+    };
 
     const reset = () => {
         colorInput.current.value = "";
@@ -82,35 +69,36 @@ function App() {
     }, [inputtedColor, first])
 
 
-    function assignClasses() {
-        return `colorInput ${touched && !isValid && "colorInput--invalid"} ${touched && isValid && "colorInput--valid"}`;
-    }
+    const assignClasses = `colorInput ${touched && !isValid && "colorInput--invalid"} ${touched && isValid && "colorInput--valid"}`;
 
-    function handlePageClick(e) {
+    const handlePageClick = e => {
         const selectedPage = e.selected;
         const first = Math.ceil(selectedPage * pageSize);
         setFirst(first);
-    }
+    };
 
-    function handleBlur() {
+    const handleBlur = () => {
         setTouched(false);
-    }
+    };
 
-    function randomColor(event) {
+    const randomColor = event => {
         event.preventDefault();
-        const randomIndex = Math.floor(Math.random()*rawData.colors.length)
+        const randomIndex = Math.floor(Math.random() * rawData.colors.length)
         const randomColor = rawData.colors[randomIndex].hex;
 
         reset();
         setInputtedColor(randomColor);
-    }
+    };
 
-    function selectColor(hex) {
+    const selectColor = hex => {
         if (hex !== inputtedColor) {
-            setInputtedColor(hex);
-            reset();
+            colorInput.current.value = hex;
+            colorInput.current.focus();
+
+            setTouched(true);
+            setIsValid(checkIsValid(hex));
         }
-    }
+    };
 
     return (
         <div className="App">
@@ -128,12 +116,12 @@ function App() {
                            onChange={(event) => handleChange(event)}
                            ref={colorInput}
                            placeholder={"#Hex"}
-                           className={assignClasses()}
+                           className={assignClasses}
                            onBlur={() => handleBlur()}
                            spellCheck={"false"}
                     />
                     <span className={"button"}
-                        onClick={(event) => randomColor(event)}
+                          onClick={(event) => randomColor(event)}
                     >Random Color</span>
                 </div>
                 <p className={`error ${touched && !isValid && "error--show"}`}>The hex format is not correct</p>
