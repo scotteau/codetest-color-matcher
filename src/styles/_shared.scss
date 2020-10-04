@@ -1,0 +1,47 @@
+$font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica, helvetica neue, ubuntu, roboto, noto, segoe ui, arial, sans-serif;
+
+$color-blue: #316aff;
+$color-gray: #63768d;
+$color-black: #141618;
+
+$fontSize-body: 1rem;
+$lineHeight-body: 1.5;
+
+$fontSize-desc: 0.875rem;
+$lineHeight-desc: 1.25;
+
+$shadow: 0 5px 30px -15px rgba(0, 0, 0, .2);
+
+
+@mixin header() {
+  font-family: $font-family;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: $color-black;
+}
+
+@mixin body() {
+  font-family: $font-family;
+  font-size: $fontSize-body;
+  font-weight: 400;
+  color: $color-black;
+}
+
+@mixin desc() {
+  font-family: $font-family;
+  font-size: $fontSize-desc;
+  font-weight: 400;
+  color: $color-black;
+}
+
+@mixin debug() {
+  border: 1px solid red;
+}
+
+@mixin reset() {
+  * {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+}

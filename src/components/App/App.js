@@ -4,11 +4,15 @@ import * as rawData from "../../model/colors.json";
 
 function App() {
 
-    // const targetColor = '#651fff';
+    const targetColor = '#651fff';
 
-    const [inputtedColor, setInputtedColor] = React.useState("#f50057");
+    const [inputtedColor, setInputtedColor] = React.useState(targetColor);
 
     const [data, setData] = React.useState([]);
+
+    const [isValid, setIsValid] = React.useState(false);
+
+    const colorInput = React.useRef(null);
 
 
     const hexToRGB = (hex) => {
@@ -70,10 +74,10 @@ function App() {
                 <td>
                     <div className="display" style={{background: hex}}/>
                 </td>
-                <td>{name}</td>
-                <td>{hex}</td>
-                <td>{`${rgb.r}, ${rgb.g}, ${rgb.b}`}</td>
-                <td>{`${cmyk.c}, ${cmyk.m}, ${cmyk.y}, ${cmyk.k}`}</td>
+                <td className="name">{name}</td>
+                <td className="hex">{hex}</td>
+                <td className="rgb">{`${rgb.r}, ${rgb.g}, ${rgb.b}`}</td>
+                <td className="cmyk">{`${cmyk.c}, ${cmyk.m}, ${cmyk.y}, ${cmyk.k}`}</td>
             </tr>
         ));
 
@@ -108,41 +112,64 @@ function App() {
     }, [inputtedColor])
 
     function handleChange(event) {
-    //    if valid
-    //    set it as inputted color
-    //    else
-        console.log(event.target.value);
-
+        const hex = event.target.value;
+        const validator = /^#[a-f0-9]{6}$/i;
+        if (validator.test(hex)) {
+            setIsValid(true);
+        } else {
+            setIsValid(false);
+        }
     }
 
     function handleSubmit(event) {
         event.preventDefault();
+        if (isValid) {
+            const result = colorInput.current.value;
+            setInputtedColor(result);
+            colorInput.current.value = "";
+        } else {
+            colorInput.current.value = "";
+            console.log("throw an error");
+        }
     }
 
     return (
         <div className="App">
-            <div className="target" style={{background: inputtedColor ? inputtedColor : "transparent"}}/>
+            <div className="target"
+                 style={{background: inputtedColor ? inputtedColor : "transparent"}}>
+                <span>{inputtedColor}</span>
+            </div>
+
+            <h1>Find the most matched colors</h1>
 
             <form onSubmit={(event) => handleSubmit(event)}>
-                <input type="text" onChange={(event) => handleChange(event)}/>
+                <input type="text"
+                       onChange={(event) => handleChange(event)}
+                       ref={colorInput}
+                       className={`colorInput`}
+
+                />
             </form>
-            <table>
-                <thead>
 
-                <tr>
-                    <th>-</th>
-                    <th>name</th>
-                    <th>Hex</th>
-                    <th>RGB</th>
-                    <th>CMYK</th>
-                </tr>
-                </thead>
+            {data.length > 0 && <>
+                <table>
+                    <thead>
 
-                <tbody>
-                {data.length > 0 && renderTableContent()}
-                </tbody>
+                    <tr>
+                        <th className="dot">-</th>
+                        <th className="name">Name</th>
+                        <th className="hex">Hex</th>
+                        <th className="rgb">RGB</th>
+                        <th className="cmyk">CMYK</th>
+                    </tr>
+                    </thead>
 
-            </table>
+                    <tbody>
+                    {renderTableContent()}
+                    </tbody>
+
+                </table>
+            </>}
         </div>
     );
 }
