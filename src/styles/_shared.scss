@@ -10,8 +10,6 @@ $lineHeight-body: 1.5;
 $fontSize-desc: 0.875rem;
 $lineHeight-desc: 1.25;
 
-$shadow: 0 5px 30px -15px rgba(0, 0, 0, .2);
-
 
 @mixin header() {
   font-family: $font-family;

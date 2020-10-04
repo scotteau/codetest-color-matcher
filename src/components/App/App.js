@@ -5,6 +5,8 @@ import {getColorDistance, hexToCMYK, hexToRGB} from "../../Utilities/utilities";
 import ReactPaginate from "react-paginate";
 
 function App() {
+    const maxItem = 50;
+    const pageSize = 20;
 
     const colorInput = React.useRef(null);
 
@@ -14,8 +16,25 @@ function App() {
     const [touched, setTouched] = React.useState(false);
     const [first, setFirst] = React.useState(0);
 
-    const maxItem = 50;
-    const pageSize = 20;
+    React.useEffect(() => {
+        if (inputtedColor) {
+            const composedData = rawData.colors.map(({color, hex}) => ({
+                name: color,
+                hex: hex,
+                rgb: hexToRGB(hex),
+                cmyk: hexToCMYK(hex),
+                distance: getColorDistance(inputtedColor, hex)
+            })).sort((a, b) => a.distance - b.distance)
+                .slice(0, maxItem)
+                .map((item, index) => ({
+                    ...item,
+                    index: index
+                }));
+
+            const result = composedData.slice(first, first + pageSize);
+            setData(result);
+        }
+    }, [inputtedColor, first])
 
     const checkIsValid = (hex) => {
         const validator = /^#[a-f0-9]{6}$/i;
@@ -48,29 +67,7 @@ function App() {
         setData([]);
     }
 
-    React.useEffect(() => {
-        if (inputtedColor) {
-            const composedData = rawData.colors.map(({color, hex}) => ({
-                name: color,
-                hex: hex,
-                rgb: hexToRGB(hex),
-                cmyk: hexToCMYK(hex),
-                distance: getColorDistance(inputtedColor, hex)
-            })).sort((a, b) => a.distance - b.distance)
-                .slice(0, maxItem)
-                .map((item, index) => ({
-                    ...item,
-                    index: index
-                }));
-
-            const result = composedData.slice(first, first + pageSize);
-            setData(result);
-        }
-    }, [inputtedColor, first])
-
-
     const assignClasses = `colorInput ${touched && !isValid && "colorInput--invalid"} ${touched && isValid && "colorInput--valid"}`;
-
     const handlePageClick = e => {
         const selectedPage = e.selected;
         const first = Math.ceil(selectedPage * pageSize);
@@ -85,7 +82,6 @@ function App() {
         event.preventDefault();
         const randomIndex = Math.floor(Math.random() * rawData.colors.length)
         const randomColor = rawData.colors[randomIndex].hex;
-
         reset();
         setInputtedColor(randomColor);
     };
@@ -94,7 +90,6 @@ function App() {
         if (hex !== inputtedColor) {
             colorInput.current.value = hex;
             colorInput.current.focus();
-
             setTouched(true);
             setIsValid(checkIsValid(hex));
         }
