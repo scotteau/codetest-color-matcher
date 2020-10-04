@@ -21,6 +21,11 @@
   color: #141618;
   font-weight: 500;
 }
+.App .target span {
+  background: white;
+  padding: 0.1rem 0.75rem;
+  border-radius: 1rem;
+}
 .App h1 {
   font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica, helvetica neue, ubuntu, roboto, noto, segoe ui, arial, sans-serif;
   font-size: 1.25rem;
@@ -37,8 +42,11 @@
   flex-direction: column;
   align-items: flex-start;
 }
-.App form .colorInput {
+.App form div {
   width: 100%;
+  display: flex;
+}
+.App form div .colorInput {
   height: 2rem;
   outline: none;
   padding: 0 0.5rem;
@@ -49,12 +57,33 @@
   color: #141618;
   border: 2px solid lightgray;
   border-radius: 0.25rem;
+  flex-grow: 1;
 }
-.App form .colorInput--valid {
+.App form div .colorInput--valid {
   border-color: limegreen;
 }
-.App form .colorInput--invalid {
+.App form div .colorInput--invalid {
   border-color: crimson;
+}
+.App form div button {
+  margin-left: 0.5rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.5rem;
+  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica, helvetica neue, ubuntu, roboto, noto, segoe ui, arial, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: #141618;
+  font-weight: 500;
+  color: #63768d;
+  border: 1px solid #63768d;
+  background: transparent;
+}
+.App form div button:hover {
+  cursor: pointer;
+  background: rgba(99, 118, 141, 0.05);
+}
+.App form div button:focus {
+  outline: none;
 }
 .App form .error {
   font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica, helvetica neue, ubuntu, roboto, noto, segoe ui, arial, sans-serif;

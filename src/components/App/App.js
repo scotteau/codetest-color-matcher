@@ -6,9 +6,7 @@ import ReactPaginate from "react-paginate";
 
 function App() {
 
-    const targetColor = '#651fff';
-
-    const [inputtedColor, setInputtedColor] = React.useState(targetColor);
+    const [inputtedColor, setInputtedColor] = React.useState();
 
     const [data, setData] = React.useState([]);
 
@@ -98,23 +96,39 @@ function App() {
         setTouched(false);
     }
 
+    function randomColor(event) {
+        event.preventDefault();
+        const randomIndex = Math.floor(Math.random()*rawData.colors.length)
+        const randomColor = rawData.colors[randomIndex].hex;
+
+        reset();
+        setInputtedColor(randomColor);
+    }
+
     return (
         <div className="App">
             <div className="target"
                  style={{background: inputtedColor ? inputtedColor : "transparent"}}>
+                <span>{inputtedColor}</span>
             </div>
 
             <h1>Find the 50 Most Matched Colors</h1>
 
             <form onSubmit={(event) => handleSubmit(event)}>
-                <input type="text"
-                       onChange={(event) => handleChange(event)}
-                       ref={colorInput}
-                       placeholder={"#Hex"}
-                       className={assignClasses()}
-                       onBlur={() => handleBlur()}
-                       spellCheck={"false"}
-                />
+                <div>
+
+                    <input type="text"
+                           onChange={(event) => handleChange(event)}
+                           ref={colorInput}
+                           placeholder={"#Hex"}
+                           className={assignClasses()}
+                           onBlur={() => handleBlur()}
+                           spellCheck={"false"}
+                    />
+                    <button
+                        onClick={(event) => randomColor(event)}
+                    >Random Color</button>
+                </div>
                 <p className={`error ${touched && !isValid && "error--show"}`}>The hex format is not correct</p>
             </form>
 
