@@ -56,22 +56,6 @@ function App() {
         colorInput.current.blur();
     }
 
-    const renderTableContent = () => {
-        return data.map(({name, hex, rgb, cmyk}, index) => (
-            <tr key={hex}>
-                <td className={"index"}>{index + 1}</td>
-                <td>
-                    <div className="display" style={{background: hex}}/>
-                </td>
-                <td className="name">{name}</td>
-                <td className="hex">{hex}</td>
-                <td className="rgb">{`${rgb.r}, ${rgb.g}, ${rgb.b}`}</td>
-                <td className="cmyk">{`${cmyk.c}, ${cmyk.m}, ${cmyk.y}, ${cmyk.k}`}</td>
-            </tr>
-        ));
-
-    }
-
     React.useEffect(() => {
         if (inputtedColor) {
             const composedData = rawData.colors.map(({color, hex}) => ({
@@ -87,6 +71,10 @@ function App() {
     }, [inputtedColor])
 
 
+    function assignClasses() {
+        return `colorInput ${touched && !isValid && "colorInput--invalid"} ${touched && isValid && "colorInput--valid"}`;
+    }
+
     return (
         <div className="App">
             <div className="target"
@@ -101,14 +89,13 @@ function App() {
                        onChange={(event) => handleChange(event)}
                        ref={colorInput}
                        placeholder={"#Hex"}
-                       className={`colorInput ${(touched && isValid) && "colorInput--valid"}`}
+                       className={assignClasses()}
                 />
             </form>
 
             {data.length > 0 && <>
                 <table>
                     <thead>
-
                     <tr>
                         <th className="index">#</th>
                         <th className="dot">-</th>
@@ -120,7 +107,20 @@ function App() {
                     </thead>
 
                     <tbody>
-                    {renderTableContent()}
+                    {
+                        data.map(({name, hex, rgb, cmyk}, index) => (
+                            <tr key={hex}>
+                                <td className={"index"}>{index + 1}</td>
+                                <td>
+                                    <div className="display" style={{background: hex}}/>
+                                </td>
+                                <td className="name">{name}</td>
+                                <td className="hex">{hex}</td>
+                                <td className="rgb">{`${rgb.r}, ${rgb.g}, ${rgb.b}`}</td>
+                                <td className="cmyk">{`${cmyk.c}, ${cmyk.m}, ${cmyk.y}, ${cmyk.k}`}</td>
+                            </tr>
+                        ))
+                    }
                     </tbody>
 
                 </table>

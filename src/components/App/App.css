@@ -36,6 +36,9 @@
 .App form .colorInput--valid {
   border-color: limegreen;
 }
+.App form .colorInput--invalid {
+  border-color: crimson;
+}
 .App table {
   font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica, helvetica neue, ubuntu, roboto, noto, segoe ui, arial, sans-serif;
   margin-top: 1rem;
