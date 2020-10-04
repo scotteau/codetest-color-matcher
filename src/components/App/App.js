@@ -1,11 +1,15 @@
 import React from 'react';
 import './App.css';
-import * as data from "../../model/colors.json";
+import * as rawData from "../../model/colors.json";
 
 function App() {
 
     // const targetColor = '#651fff';
-    const targetColor = '#acc2d9';
+
+    const [inputtedColor, setInputtedColor] = React.useState("#f50057");
+
+    const [data, setData] = React.useState([]);
+
 
     const hexToRGB = (hex) => {
         const rgb = {r: '0x' + hex[1] + hex[2] | 0, g: '0x' + hex[3] + hex[4] | 0, b: '0x' + hex[5] + hex[6] | 0};
@@ -60,32 +64,18 @@ function App() {
         return cmyk;
     }
 
-    const rgbTitle = (hex) => {
-        const rgb = hexToRGB(hex);
-        return `${rgb.r}, ${rgb.g}, ${rgb.b}`;
-    }
-
-    const cmykTitle = (hex) => {
-        const cmyk = hexToCMYK(hex);
-        return `${cmyk.c}, ${cmyk.m}, ${cmyk.y}, ${cmyk.k}`;
-    }
-
-
-
     const renderTableContent = () => {
-        const result = data.colors.slice(0, 10);
-        return result.map(({color, hex}) => (
+        return data.map(({name, hex, rgb, cmyk}) => (
             <tr key={hex}>
                 <td>
                     <div className="display" style={{background: hex}}/>
                 </td>
-                <td>{color}</td>
+                <td>{name}</td>
                 <td>{hex}</td>
-                <td>{rgbTitle(hex)}</td>
-                <td>{cmykTitle(hex)}</td>
-                <td>{colorDistance(hex, targetColor)}</td>
+                <td>{`${rgb.r}, ${rgb.g}, ${rgb.b}`}</td>
+                <td>{`${cmyk.c}, ${cmyk.m}, ${cmyk.y}, ${cmyk.k}`}</td>
             </tr>
-        ))
+        ));
 
     }
 
@@ -98,15 +88,28 @@ function App() {
         const g = parseFloat(rgb1.g) - parseFloat(rgb2.g);
         const b = parseFloat(rgb1.b) - parseFloat(rgb2.b);
 
-        const distance = Math.sqrt((((512 + rmean)*r*r)>>8) + 4*g*g + (((767-rmean)*b*b)>>8));
-        console.log(distance);
-
-        return distance;
+        return Math.sqrt((((512 + rmean) * r * r) >> 8) + 4 * g * g + (((767 - rmean) * b * b) >> 8));
     }
+
+    React.useEffect(() => {
+        if (inputtedColor) {
+            console.log("should get data");
+
+            const composedData = rawData.colors.map(({color, hex}) => ({
+                name: color,
+                hex: hex,
+                rgb: hexToRGB(hex),
+                cmyk: hexToCMYK(hex),
+                distance: colorDistance(inputtedColor, hex)
+            })).sort((a, b) => a.distance - b.distance).slice(0, 50);
+
+            setData(composedData);
+        }
+    }, [inputtedColor])
 
     return (
         <div className="App">
-            <div className="target" style={{background: targetColor}}/>
+            <div className="target" style={{background: inputtedColor ? inputtedColor : "transparent"}}/>
             <table>
                 <thead>
 
@@ -116,12 +119,11 @@ function App() {
                     <th>Hex</th>
                     <th>RGB</th>
                     <th>CMYK</th>
-                    <th>Distance</th>
                 </tr>
                 </thead>
 
                 <tbody>
-                {renderTableContent()}
+                {data.length > 0 && renderTableContent()}
                 </tbody>
 
             </table>
